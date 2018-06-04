@@ -8,8 +8,11 @@ namespace Spaceshooter {
 
     export class Player extends Phaser.Sprite {
         static readonly TargetSpeed = 150;
+        static readonly ShotBulletSpeed = 150;
         static readonly AccelerationMultiplier = 0.2;
+        static readonly BulletRepeatDelayMs = 200;
         currentState: AnimationState
+        lastShotAt: number
 
         constructor(game: Phaser.Game, x: number, y: number) {
 
@@ -26,7 +29,7 @@ namespace Spaceshooter {
 
             game.add.existing(this);
 
-            this.body.velocity.x = 0;
+            this.lastShotAt = this.game.time.now;
         }
 
         // TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
@@ -58,6 +61,16 @@ namespace Spaceshooter {
             } else {
                 this.setState(AnimationState.normal);
             }
+
+            // Bullet shooting support
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) &&
+                this.game.time.now - this.lastShotAt >= Player.BulletRepeatDelayMs)
+            {
+                // Shoot from the right part of our ship
+                const bullet = new Bullet(this.game, this.x + this.width / 2, this.y, Player.ShotBulletSpeed);
+                this.lastShotAt = this.game.time.now;
+            }
+
         }
 
         setState(state: AnimationState) {
