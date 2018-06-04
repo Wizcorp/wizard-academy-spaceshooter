@@ -1,4 +1,4 @@
-module MyGame {
+module Spaceshooter {
 
 	export class Boot extends Phaser.State {
 
