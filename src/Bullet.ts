@@ -6,6 +6,7 @@ namespace Spaceshooter {
         constructor(game: Phaser.Game, x: number, y: number, vx: number) {
 
             super(game, x, y, 'bullet', 0);
+            this.smoothed = false;
 
             this.game.physics.arcade.enableBody(this);
 

@@ -15,6 +15,8 @@ module Spaceshooter {
 			if (this.game.device.desktop) {
 				//  If you have any desktop specific settings, they can go in here
 				this.scale.pageAlignHorizontally = true;
+				this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+				this.scale.setMinMax(480, 270, 960, 540);
 			}
 			else {
 				//  Same goes for mobile settings.

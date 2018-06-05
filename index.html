@@ -7,6 +7,24 @@
 	<title>TypeScript HTML App Template</title>
 	<script src="lib/phaser.min.js"></script>
 	<script src="bin/game.js"></script>
+	<style type="text/css">
+	canvas {
+		image-rendering: optimizeSpeed;             /* Older versions of FF          */
+		image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+		image-rendering: -webkit-optimize-contrast; /* Safari                        */
+		image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+		image-rendering: pixelated;                 /* Awesome future-browsers       */
+		-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+	}
+
+	/* TODO Florian -- Find a right way to do that */
+	/* #content {
+		transform: scale(2);
+		transform-origin: top left;
+	}
+	html, body { height: 100%; overflow: hidden; } */
+
+	</style>
 </head>
 
 <body>

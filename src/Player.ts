@@ -8,7 +8,7 @@ namespace Spaceshooter {
 
     export class Player extends Phaser.Sprite {
         static readonly TargetSpeed = 150;
-        static readonly ShotBulletSpeed = 150;
+        static readonly ShotBulletSpeed = 300;
         static readonly AccelerationMultiplier = 0.2;
         static readonly BulletRepeatDelayMs = 200;
         currentState: AnimationState
@@ -17,6 +17,7 @@ namespace Spaceshooter {
         constructor(game: Phaser.Game, x: number, y: number) {
 
             super(game, x, y, 'player', 0);
+            this.smoothed = false;
 
             this.game.physics.arcade.enableBody(this);
 
