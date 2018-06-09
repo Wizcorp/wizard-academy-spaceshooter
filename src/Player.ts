@@ -26,12 +26,10 @@ namespace Spaceshooter {
 
 			this.anchor.setTo(0.5, 0.5);
 
-			this.animations.add(AnimationState.normal, [0], 0, false);
-			this.animations.add(AnimationState.upwards, [1], 0, false);
-			this.animations.add(AnimationState.downwards, [2], 0, false);
-			this.animations.add(AnimationState.destroyed, [3, 4, 5, 6], 3, true);
-
-			scene.game.add.existing(this);
+			this.animations.add(AnimationState.normal, [0], 0, true);
+			this.animations.add(AnimationState.upwards, [1], 0, true);
+			this.animations.add(AnimationState.downwards, [2], 0, true);
+			this.animations.add(AnimationState.destroyed, [3, 4, 5, 6], 6, false);
 
 			this.scene = scene;
 			this.lastShotAt = this.game.time.now;
@@ -39,6 +37,11 @@ namespace Spaceshooter {
 
 		// TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
 		update() {
+			// Nothing to do when dead
+			if (this.currentState === AnimationState.destroyed) {
+				return;
+			}
+
 			let targetVX = 0, targetVY = 0;
 
 			// Move the ship with input
@@ -85,5 +88,18 @@ namespace Spaceshooter {
 			}
 		}
 
+		hasBeenHitByEnemy(enemy: BasicEnemy) {
+			if (this.currentState === AnimationState.destroyed) {
+				return;
+			}
+			this.currentState = AnimationState.destroyed;
+
+			// Play a destroy animation and kill ourselves
+			this.animations.play(AnimationState.destroyed);
+			this.animations.currentAnim.onComplete.add(() => {
+				this.scene.playerHasDied(this);
+			});
+			this.body.velocity.x = this.body.velocity.y = 0;
+		}
 	}
 }

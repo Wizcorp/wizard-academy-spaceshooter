@@ -10,8 +10,6 @@ namespace Spaceshooter {
 
 			this.game.physics.arcade.enableBody(this);
 
-			game.add.existing(this);
-
 			// Set the bullet to have the speed passed in parameter. Flip it if negative, since the sprite is looking right.
 			this.body.velocity.x = vx;
 			this.scale.x = vx > 0 ? 1 : -1;

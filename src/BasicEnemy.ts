@@ -24,27 +24,25 @@ namespace Spaceshooter {
 
 			this.behaviour = behaviourDesc;
 			this.animations.play('normal');
-
-			game.add.existing(this);
 		}
 
 		// TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
 		update() {
-			if (this.destroyed) {
-				this.body.velocity.x = this.body.velocity.y = 0;
-				return;
+			if (!this.destroyed) {
+				this.body.velocity = this.behaviour.movementFunc();
 			}
-
-			this.body.velocity = this.behaviour.movementFunc();
 		}
 
-		hasBeenHitByBullet(bullet: Spaceshooter.Bullet) {
+		hasBeenHitByBullet(bullet: Bullet) {
 			// Already dead? Do not eat another bullet / restart the animation.
-			if (this.destroyed) return;
+			if (this.destroyed) {
+				return;
+			}
 			this.destroyed = true;
 
 			// Play a destroy animation and kill ourselves
 			this.animations.play('destroyed');
+			this.body.velocity.x = this.body.velocity.y = 0;
 			this.animations.currentAnim.onComplete.add(() => {
 				this.destroy(true);
 			});
