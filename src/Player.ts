@@ -11,12 +11,15 @@ namespace Spaceshooter {
 		static readonly ShotBulletSpeed = 300;
 		static readonly AccelerationMultiplier = 0.2;
 		static readonly BulletRepeatDelayMs = 200;
+
+		// Keep in order to communicate with root
+		scene: GameScene;
+
 		currentState: AnimationState;
 		lastShotAt: number;
 
-		constructor(game: Phaser.Game, x: number, y: number) {
-
-			super(game, x, y, 'player', 0);
+		constructor(scene: GameScene, x: number, y: number) {
+			super(scene.game, x, y, 'player', 0);
 			this.smoothed = false;
 
 			this.game.physics.arcade.enableBody(this);
@@ -28,8 +31,9 @@ namespace Spaceshooter {
 			this.animations.add(AnimationState.downwards, [2], 0, false);
 			this.animations.add(AnimationState.destroyed, [3, 4, 5, 6], 3, true);
 
-			game.add.existing(this);
+			scene.game.add.existing(this);
 
+			this.scene = scene;
 			this.lastShotAt = this.game.time.now;
 		}
 
@@ -68,7 +72,7 @@ namespace Spaceshooter {
 				this.game.time.now - this.lastShotAt >= Player.BulletRepeatDelayMs)
 			{
 				// Shoot from the right part of our ship
-				const bullet = new Bullet(this.game, this.x + this.width / 2, this.y, Player.ShotBulletSpeed);
+				this.scene.spawnPlayerBullet(this.x + this.width / 2, this.y, Player.ShotBulletSpeed);
 				this.lastShotAt = this.game.time.now;
 			}
 

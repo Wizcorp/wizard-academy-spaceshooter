@@ -1,10 +1,5 @@
 namespace Spaceshooter {
 
-	enum EnemyAnimationState {
-		normal = 'normal',
-		destroyed = 'destroyed',
-	}
-
 	export class EnemyBehaviourDesc {
 		movementFunc: () => Phaser.Point;
 
@@ -15,7 +10,7 @@ namespace Spaceshooter {
 
 	export class BasicEnemy extends Phaser.Sprite {
 		behaviour: EnemyBehaviourDesc;
-		animationState: EnemyAnimationState;
+		destroyed: boolean = false;
 
 
 		constructor(game: Phaser.Game, x: number, y: number, behaviourDesc: EnemyBehaviourDesc) {
@@ -24,26 +19,31 @@ namespace Spaceshooter {
 
 			this.game.physics.arcade.enableBody(this);
 			this.anchor.setTo(0.5, 0.5);
-			this.animations.add(EnemyAnimationState.normal, [0, 1, 2, 1], 8, true);
-			this.animations.add(EnemyAnimationState.destroyed, [3, 4, 5], 3, false);
+			this.animations.add('normal', [0, 1, 2, 1], 8, true);
+			this.animations.add('destroyed', [3, 4, 5], 4, false);
 
 			this.behaviour = behaviourDesc;
-			this.setState(EnemyAnimationState.normal);
+			this.animations.play('normal');
 
 			game.add.existing(this);
 		}
 
 		// TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
 		update() {
-			const result = this.behaviour.movementFunc();
-			this.body.velocity = result;
+			if (this.destroyed) {
+				this.body.velocity.x = this.body.velocity.y = 0;
+				return;
+			}
+
+			this.body.velocity = this.behaviour.movementFunc();
 		}
 
-		setState(state: EnemyAnimationState) {
-			if (state !== this.animationState) {
-				this.animationState= state;
-				this.animations.play(this.animationState);
-			}
+		hasBeenHitByBullet(bullet: Spaceshooter.Bullet) {
+			this.destroyed = true;
+			this.animations.play('destroyed');
+			this.animations.currentAnim.onComplete.add(() => {
+				this.destroy(true);
+			});
 		}
 	}
 }

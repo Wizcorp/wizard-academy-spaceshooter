@@ -7,7 +7,7 @@ module Spaceshooter {
 
 			this.state.add('Boot', Boot, false);
 			this.state.add('Preloader', Preloader, false);
-			this.state.add('MainGame', MainGame, false);
+			this.state.add('GameScene', GameScene, false);
 
 			this.state.start('Boot');
 		}

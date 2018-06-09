@@ -17,7 +17,7 @@ module Spaceshooter {
 		}
 
 		create() {
-			this.game.state.start('MainGame');
+			this.game.state.start('GameScene');
 		}
 	}
 }
