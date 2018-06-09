@@ -1,85 +1,85 @@
 namespace Spaceshooter {
-    enum AnimationState {
-        normal = 'normal',
-        upwards = 'upwards',
-        downwards = 'downwards',
-        destroyed = 'destroyed',
-    }
+	enum AnimationState {
+		normal = 'normal',
+		upwards = 'upwards',
+		downwards = 'downwards',
+		destroyed = 'destroyed',
+	}
 
-    export class Player extends Phaser.Sprite {
-        static readonly TargetSpeed = 150;
-        static readonly ShotBulletSpeed = 300;
-        static readonly AccelerationMultiplier = 0.2;
-        static readonly BulletRepeatDelayMs = 200;
-        currentState: AnimationState
-        lastShotAt: number
+	export class Player extends Phaser.Sprite {
+		static readonly TargetSpeed = 150;
+		static readonly ShotBulletSpeed = 300;
+		static readonly AccelerationMultiplier = 0.2;
+		static readonly BulletRepeatDelayMs = 200;
+		currentState: AnimationState;
+		lastShotAt: number;
 
-        constructor(game: Phaser.Game, x: number, y: number) {
+		constructor(game: Phaser.Game, x: number, y: number) {
 
-            super(game, x, y, 'player', 0);
-            this.smoothed = false;
+			super(game, x, y, 'player', 0);
+			this.smoothed = false;
 
-            this.game.physics.arcade.enableBody(this);
+			this.game.physics.arcade.enableBody(this);
 
-            this.anchor.setTo(0.5, 0.5);
+			this.anchor.setTo(0.5, 0.5);
 
-            this.animations.add(AnimationState.normal, [0], 0, false);
-            this.animations.add(AnimationState.upwards, [1], 0, false);
-            this.animations.add(AnimationState.downwards, [2], 0, false);
-            this.animations.add(AnimationState.destroyed, [3, 4, 5, 6], 3, true);
+			this.animations.add(AnimationState.normal, [0], 0, false);
+			this.animations.add(AnimationState.upwards, [1], 0, false);
+			this.animations.add(AnimationState.downwards, [2], 0, false);
+			this.animations.add(AnimationState.destroyed, [3, 4, 5, 6], 3, true);
 
-            game.add.existing(this);
+			game.add.existing(this);
 
-            this.lastShotAt = this.game.time.now;
-        }
+			this.lastShotAt = this.game.time.now;
+		}
 
-        // TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
-        update() {
-            let targetVX = 0, targetVY = 0;
+		// TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
+		update() {
+			let targetVX = 0, targetVY = 0;
 
-            // Move the ship with input
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                targetVX = -Player.TargetSpeed
-            } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                targetVX = +Player.TargetSpeed
-            }
+			// Move the ship with input
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+				targetVX = -Player.TargetSpeed
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+				targetVX = +Player.TargetSpeed
+			}
 
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-                targetVY = -Player.TargetSpeed
-            } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-                targetVY = +Player.TargetSpeed
-            }
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+				targetVY = -Player.TargetSpeed
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+				targetVY = +Player.TargetSpeed
+			}
 
-            // Apply acceleration to velocity
-            this.body.velocity.x += (targetVX - this.body.velocity.x) * Player.AccelerationMultiplier;
-            this.body.velocity.y += (targetVY - this.body.velocity.y) * Player.AccelerationMultiplier;
+			// Apply acceleration to velocity
+			this.body.velocity.x += (targetVX - this.body.velocity.x) * Player.AccelerationMultiplier;
+			this.body.velocity.y += (targetVY - this.body.velocity.y) * Player.AccelerationMultiplier;
 
-            // Right animation type depending on velocity
-            if (this.body.velocity.y >= Player.TargetSpeed * 0.9) {
-                this.setState(AnimationState.upwards);
-            } else if (this.body.velocity.y <= -Player.TargetSpeed * 0.9) {
-                this.setState(AnimationState.downwards);
-            } else {
-                this.setState(AnimationState.normal);
-            }
+			// Right animation type depending on velocity
+			if (this.body.velocity.y >= Player.TargetSpeed * 0.9) {
+				this.setState(AnimationState.upwards);
+			} else if (this.body.velocity.y <= -Player.TargetSpeed * 0.9) {
+				this.setState(AnimationState.downwards);
+			} else {
+				this.setState(AnimationState.normal);
+			}
 
-            // Bullet shooting support
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) &&
-                this.game.time.now - this.lastShotAt >= Player.BulletRepeatDelayMs)
-            {
-                // Shoot from the right part of our ship
-                const bullet = new Bullet(this.game, this.x + this.width / 2, this.y, Player.ShotBulletSpeed);
-                this.lastShotAt = this.game.time.now;
-            }
+			// Bullet shooting support
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) &&
+				this.game.time.now - this.lastShotAt >= Player.BulletRepeatDelayMs)
+			{
+				// Shoot from the right part of our ship
+				const bullet = new Bullet(this.game, this.x + this.width / 2, this.y, Player.ShotBulletSpeed);
+				this.lastShotAt = this.game.time.now;
+			}
 
-        }
+		}
 
-        setState(state: AnimationState) {
-            if (state !== this.currentState) {
-                this.currentState = state;
-                this.animations.play(this.currentState);
-            }
-        }
+		setState(state: AnimationState) {
+			if (state !== this.currentState) {
+				this.currentState = state;
+				this.animations.play(this.currentState);
+			}
+		}
 
-    }
+	}
 }

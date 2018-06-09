@@ -11,7 +11,5 @@ module Spaceshooter {
 
 			this.state.start('Boot');
 		}
-
 	}
-
 }

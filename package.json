@@ -1,0 +1,24 @@
+{
+  "name": "wizardacademy-spaceshooter",
+  "version": "1.0.0",
+  "description": "A Typescript template for HTML5 games using the Phaser game engine. The files included are a mixture of of the basic template provided in the [phaser-ce](https://github.com/photonstorm/phaser-ce) repository and the [Advanced Phaser and Typescript Projects](http://www.photonstorm.com/phaser/advanced-phaser-and-typescript-projects) tutorial provided on the Photon Storm blog.",
+  "main": "index.js",
+  "bin": {
+    "wizardacademy-spaceshooter": "game.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc --project . && http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattherman/phaser-typescript-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattherman/phaser-typescript-template/issues"
+  },
+  "homepage": "https://github.com/mattherman/phaser-typescript-template#readme"
+}
