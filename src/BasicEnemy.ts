@@ -39,11 +39,18 @@ namespace Spaceshooter {
 		}
 
 		hasBeenHitByBullet(bullet: Spaceshooter.Bullet) {
+			// Already dead? Do not eat another bullet / restart the animation.
+			if (this.destroyed) return;
 			this.destroyed = true;
+
+			// Play a destroy animation and kill ourselves
 			this.animations.play('destroyed');
 			this.animations.currentAnim.onComplete.add(() => {
 				this.destroy(true);
 			});
+
+			// Destroy the bullet too
+			bullet.destroy(true);
 		}
 	}
 }
