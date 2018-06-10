@@ -1,19 +1,34 @@
 module Spaceshooter {
 
 	export class GameScene extends Phaser.State {
-		background: Phaser.Sprite;
 		player: Player;
 		// We need to keep track of that to enable collisions to be handled at the root
 		bullets: Bullet[] = [];
 		enemies: BasicEnemy[] = [];
+		cameraOffset: number = 0;
+		cameraMoveSpeed: number = 0.33;
 
 		preload() {
+			this.game.load.tilemap('bg', 'assets/level01.json', null, Phaser.Tilemap.TILED_JSON);
+			this.game.load.image('bg_tiles', 'assets/level01.tmx.png');
 			this.load.spritesheet('player', 'assets/player.png', 32, 16);
 			this.load.image('bullet', 'assets/bullet.png');
 			this.load.spritesheet('basicenemy', 'assets/basicenemy.png', 16, 16);
 		}
 
 		create() {
+			// Load BG
+			const map = this.game.add.tilemap('bg');
+			//  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file under tilesets[0].name)
+			//  The second parameter maps this name to the Phaser.Cache key 'tiles'
+			map.addTilesetImage('tileset', 'bg_tiles');
+			//  Creates a layer from the 'BG' layer in the map data.
+			//  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
+			const layer = map.createLayer('BG');
+			//  This resizes the game world to match the layer dimensions
+			layer.resizeWorld();
+
+			// Add player
 			this.player = new Player(this, this.game.width/2, this.game.height/2);
 			this.game.add.existing(this.player);
 
@@ -42,6 +57,10 @@ module Spaceshooter {
 					this.player.hasBeenHitByEnemy(enemy);
 				}
 			}
+
+			// Scroll screen by moving camera
+			this.cameraOffset += this.cameraMoveSpeed;
+			this.game.camera.x = this.cameraOffset;
 		}
 
 		fadeOut() {
