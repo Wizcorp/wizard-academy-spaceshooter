@@ -79,6 +79,9 @@ namespace Spaceshooter {
 				this.lastShotAt = this.game.time.now;
 			}
 
+			// Stay within screen bounds (the sprite position is in the center)
+			// TODO Florian -- The real fix would be to have the left wall be able to push the player
+			this.x = Math.max(this.x, this.scene.cameraOffset + this.width / 2);
 		}
 
 		setState(state: AnimationState) {

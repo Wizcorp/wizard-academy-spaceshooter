@@ -3,10 +3,15 @@ module Spaceshooter {
 	export class GameScene extends Phaser.State {
 		player: Player;
 		// We need to keep track of that to enable collisions to be handled at the root
-		bullets: Bullet[] = [];
-		enemies: BasicEnemy[] = [];
-		cameraOffset: number = 0;
-		cameraMoveSpeed: number = 0.33;
+		bullets: Bullet[];
+		enemies: BasicEnemy[];
+		walls: Phaser.Sprite[];
+		leftWall: Phaser.Sprite;
+		rightWall: Phaser.Sprite;
+
+		// For use by children
+		cameraOffset: number;
+		cameraMoveSpeed: number;
 
 		preload() {
 			this.game.load.tilemap('bg', 'assets/level01.json', null, Phaser.Tilemap.TILED_JSON);
@@ -17,6 +22,10 @@ module Spaceshooter {
 		}
 
 		create() {
+			this.bullets = [];
+			this.enemies = [];
+			this.walls = [];
+
 			// Load BG
 			const map = this.game.add.tilemap('bg');
 			//  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file under tilesets[0].name)
@@ -32,15 +41,27 @@ module Spaceshooter {
 			this.player = new Player(this, this.game.width/2, this.game.height/2);
 			this.game.add.existing(this.player);
 
+			// Add walls on top and bottom to restrict the player
+			this.createSquareWall(0, -8, map.widthInPixels, 8);
+			this.createSquareWall(0, map.heightInPixels, map.widthInPixels, 8);
+
+			// Left and right walls move with the player
+			this.leftWall = this.createSquareWall(-8, 0, 8, map.heightInPixels);
+			this.rightWall = this.createSquareWall(this.game.width, 0, 8, map.heightInPixels);
+
 			// Move the enemy 100 pixels left per second
 			const simpleMovement = () => {
 				// Return the velocity of the enemy
 				return new Phaser.Point(-100, 0);
 			};
 			const behaviour = new EnemyBehaviourDesc(simpleMovement);
-			const enemy = new BasicEnemy(this.game, this.game.width, this.game.height /2, behaviour);
+			const enemy = new BasicEnemy(this.game, 600 + this.game.width, this.game.height /2, behaviour);
 			this.enemies.push(enemy);
 			this.game.add.existing(enemy);
+
+			// Initializations
+			this.cameraOffset = 600;
+			this.cameraMoveSpeed = 0.33;
 		}
 
 		update() {
@@ -58,9 +79,27 @@ module Spaceshooter {
 				}
 			}
 
+			// Collision with walls
+			for (const wall of this.walls) {
+				this.game.physics.arcade.collide(wall, this.player);
+			}
+
 			// Scroll screen by moving camera
 			this.cameraOffset += this.cameraMoveSpeed;
 			this.game.camera.x = this.cameraOffset;
+
+			// Move walls with camera
+			this.leftWall.x = this.cameraOffset - this.leftWall.width;
+			this.rightWall.x = this.cameraOffset + this.game.width;
+		}
+
+		createSquareWall(x: number, y: number, width: number, height: number): Phaser.Sprite {
+			const wall = this.game.add.sprite(x, y);
+			this.game.physics.arcade.enableBody(wall);
+			wall.body.immovable = true;
+			wall.body.setSize(width, height);
+			this.walls.push(wall);
+			return wall;
 		}
 
 		fadeOut() {
