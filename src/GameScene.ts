@@ -5,6 +5,7 @@ module Spaceshooter {
 		// We need to keep track of that to enable collisions to be handled at the root
 		bullets: Bullet[];
 		enemies: BasicEnemy[];
+		bg: Phaser.TileSprite;
 		walls: Phaser.Sprite[];
 		leftWall: Phaser.Sprite;
 		rightWall: Phaser.Sprite;
@@ -15,7 +16,8 @@ module Spaceshooter {
 		collisionLayer: Phaser.TilemapLayer;
 
 		preload() {
-			this.game.load.tilemap('bg', 'assets/level01.json', null, Phaser.Tilemap.TILED_JSON);
+			this.game.load.image('bg', 'assets/bg.png');
+			this.game.load.tilemap('bgmap', 'assets/level01.json', null, Phaser.Tilemap.TILED_JSON);
 			this.game.load.image('bg_tiles', 'assets/level01.tmx.png');
 			this.load.spritesheet('player', 'assets/player.png', 32, 16);
 			this.load.image('bullet', 'assets/bullet.png');
@@ -27,8 +29,11 @@ module Spaceshooter {
 			this.enemies = [];
 			this.walls = [];
 
-			// Load BG
-			const map = this.game.add.tilemap('bg');
+			// Load BG, make it large enough
+			this.bg = this.game.add.tileSprite(0, 0, 1024 * 1024, 208, 'bg');
+
+			// And BG map
+			const map = this.game.add.tilemap('bgmap');
 			//  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file under tilesets[0].name)
 			//  The second parameter maps this name to the Phaser.Cache key 'tiles'
 			map.addTilesetImage('tileset', 'bg_tiles');
@@ -105,6 +110,9 @@ module Spaceshooter {
 			// Scroll screen by moving camera
 			this.cameraOffset += this.cameraMoveSpeed;
 			this.game.camera.x = this.cameraOffset;
+
+			// Scroll BG faster
+			this.bg.x = -7 * this.cameraOffset;
 
 			// Move walls with camera
 			this.leftWall.x = this.cameraOffset - this.leftWall.width;
