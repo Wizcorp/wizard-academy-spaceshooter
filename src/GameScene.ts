@@ -12,6 +12,7 @@ module Spaceshooter {
 		// For use by children
 		cameraOffset: number;
 		cameraMoveSpeed: number;
+		collisionLayer: Phaser.TilemapLayer;
 
 		preload() {
 			this.game.load.tilemap('bg', 'assets/level01.json', null, Phaser.Tilemap.TILED_JSON);
@@ -36,6 +37,13 @@ module Spaceshooter {
 			const layer = map.createLayer('BG');
 			//  This resizes the game world to match the layer dimensions
 			layer.resizeWorld();
+
+			this.collisionLayer = map.createLayer('Collisions');
+			this.collisionLayer.visible = false;
+			this.game.physics.arcade.enable(this.collisionLayer);
+
+			// Choose which tiles will collide ("firstgid":161)
+			map.setCollision(162, true, 'Collisions');
 
 			// Add player
 			this.player = new Player(this, this.game.width/2, this.game.height/2);
@@ -65,6 +73,16 @@ module Spaceshooter {
 		}
 
 		update() {
+			// Collide the player simply with the BG
+			this.game.physics.arcade.collide(this.player, this.collisionLayer);
+
+			// More interesting, collide bullets with the walls
+			for (const bullet of this.bullets) {
+				if (this.game.physics.arcade.collide(bullet, this.collisionLayer)) {
+					bullet.hitAWall();
+				}
+			}
+
 			for (const enemy of this.enemies) {
 				// Check collisions between bullets and enemies
 				for (const bullet of this.bullets) {

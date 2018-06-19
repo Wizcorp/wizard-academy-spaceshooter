@@ -20,5 +20,9 @@ namespace Spaceshooter {
 		// TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
 		update() {
 		}
+
+		hitAWall() {
+			this.destroy(true);
+		}
 	}
 }
