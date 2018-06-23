@@ -26,8 +26,7 @@ namespace Spaceshooter {
 			this.animations.play('normal');
 		}
 
-		// TODO Florian -- this should be a fixed step function! But I don't know how to do that in phaser.
-		update() {
+		fixedUpdate() {
 			if (!this.destroyed) {
 				this.body.velocity = this.behaviour.movementFunc();
 			}

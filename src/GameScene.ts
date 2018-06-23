@@ -1,6 +1,7 @@
+///<reference path="base/TimesteppedScene.ts"/>
 module Spaceshooter {
 
-	export class GameScene extends Phaser.State {
+	export class GameScene extends TimesteppedScene {
 		player: Player;
 		// We need to keep track of that to enable collisions to be handled at the root
 		bullets: Bullet[];
@@ -75,20 +76,27 @@ module Spaceshooter {
 			// Initializations
 			this.cameraOffset = 600;
 			this.cameraMoveSpeed = 0.33;
+
+			// Test
+			// this.time.desiredFps = 20;
 		}
 
-		update() {
+		fixedUpdate() {
+			this.player.fixedUpdate();
+
 			// Collide the player simply with the BG
 			this.game.physics.arcade.collide(this.player, this.collisionLayer);
 
 			// More interesting, collide bullets with the walls
 			for (const bullet of this.bullets) {
+				bullet.fixedUpdate();
 				if (this.game.physics.arcade.collide(bullet, this.collisionLayer)) {
 					bullet.hitAWall();
 				}
 			}
 
 			for (const enemy of this.enemies) {
+				enemy.fixedUpdate();
 				// Check collisions between bullets and enemies
 				for (const bullet of this.bullets) {
 					if (this.game.physics.arcade.overlap(bullet, enemy)) {
