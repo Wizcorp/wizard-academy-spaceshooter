@@ -5,8 +5,6 @@
 <head>
 	<meta charset="utf-8" />
 	<title>TypeScript HTML App Template</title>
-	<script src="lib/phaser.min.js"></script>
-	<script src="bin/game.js"></script>
 	<style type="text/css">
 	canvas {
 		image-rendering: optimizeSpeed;             /* Older versions of FF          */
@@ -25,14 +23,6 @@
 
 	<div id="content"></div>
 
+	<script src="build/game.bundle.js"></script>
 </body>
-
-<script>
-
-	window.onload = () => {
-		var game = new Spaceshooter.Game();
-	};
-
-</script>
-
 </html>

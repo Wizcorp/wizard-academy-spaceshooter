@@ -1,14 +1,19 @@
 {
-	"compilerOptions": {
-		"module": "system",
-		"noImplicitAny": true,
-		"removeComments": true,
-		"preserveConstEnums": true,
-		"outFile": "bin/game.js",
-		"sourceMap": true,
-	},
-	"include": [
-		"src/**/*.ts",
-		"lib/types/phaser.comments.d.ts"
-	]
+  "compilerOptions": {
+    /* The folders for type definitions */
+    "typeRoots": [
+      "./lib/types",
+      "./node_modules/@types"
+    ],
+    "target": "ES2017",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true
+  },
+  /* Source files. You may put type definitions here but it's not the right place for it */
+  "include": [
+    "src/index.ts"
+  ]
 }
