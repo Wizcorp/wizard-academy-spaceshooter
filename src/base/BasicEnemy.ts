@@ -1,4 +1,3 @@
-import * as Phaser from 'phaser-ce';
 import { Bullet } from "../Bullet";
 
 export class EnemyBehaviourDesc {

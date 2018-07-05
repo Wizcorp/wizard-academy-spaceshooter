@@ -1,4 +1,3 @@
-import * as Phaser from 'phaser-ce';
 
 export class Preloader extends Phaser.State {
 

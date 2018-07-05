@@ -1,4 +1,3 @@
-import * as Phaser from 'phaser-ce';
 import { TimesteppedScene } from "./base/TimesteppedScene";
 import { Player } from "./Player";
 import { Bullet } from "./Bullet";

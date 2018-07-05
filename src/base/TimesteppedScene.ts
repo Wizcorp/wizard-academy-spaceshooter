@@ -1,4 +1,3 @@
-import * as Phaser from 'phaser-ce';
 
 const BASIC_DT = 1.0 / 60.0;
 
