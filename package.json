@@ -4,7 +4,7 @@
   "description": "A Template for a spaceshooter made for the Wizard Academy.",
   "main": "index.js",
   "dependencies": {
-    "phaser": "^3.10.1"
+    "phaser-ce": "^2.11.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.5",

@@ -1,15 +1,4 @@
-import * as Phaser from 'phaser';
+import { Game } from "./base/Game";
 
-const config:GameConfig = {
-	type: Phaser.AUTO,
-	parent: 'content',
-	width: 640,
-	height: 480,
-	resolution: 1,
-	backgroundColor: "#EDEEC9",
-	scene: [
-	]
-};
+const game = new Game();
 
-new Phaser.Game(config);
-console.log(`TEMP ICI`, Phaser);
