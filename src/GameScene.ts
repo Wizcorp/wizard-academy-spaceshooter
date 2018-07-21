@@ -8,7 +8,7 @@ export class GameScene extends TimesteppedScene {
 	// We need to keep track of that to enable collisions to be handled at the root
 	bullets: Bullet[];
 	enemies: BasicEnemy[];
-	bg: Phaser.TileSprite;
+	bg: Phaser.Sprite;
 	walls: Phaser.Sprite[];
 	leftWall: Phaser.Sprite;
 	rightWall: Phaser.Sprite;
@@ -22,7 +22,7 @@ export class GameScene extends TimesteppedScene {
 		this.game.load.image('bg', 'assets/bg.png');
 		this.game.load.tilemap('bgmap', 'assets/level01.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('bg_tiles', 'assets/level01.tmx.png');
-		this.load.spritesheet('player', 'assets/player.png', 32, 16);
+		this.load.spritesheet('player', 'assets/player.png', 24, 24);
 		this.load.image('bullet', 'assets/bullet.png');
 		this.load.spritesheet('basicenemy', 'assets/basicenemy.png', 16, 16);
 	}
@@ -33,7 +33,7 @@ export class GameScene extends TimesteppedScene {
 		this.walls = [];
 
 		// Load BG, make it large enough
-		this.bg = this.game.add.tileSprite(0, 0, 1024 * 1024, 208, 'bg');
+		this.bg = this.game.add.sprite(0, 0, 'bg');
 
 		// And BG map
 		const map = this.game.add.tilemap('bgmap');
@@ -77,7 +77,7 @@ export class GameScene extends TimesteppedScene {
 
 		// Initializations
 		this.cameraOffset = 600;
-		this.cameraMoveSpeed = 0.33;
+		this.cameraMoveSpeed = 0.7;
 
 		// Test
 		// this.time.desiredFps = 20;
@@ -121,8 +121,8 @@ export class GameScene extends TimesteppedScene {
 		this.cameraOffset += this.cameraMoveSpeed;
 		this.game.camera.x = this.cameraOffset;
 
-		// Scroll BG faster
-		this.bg.x = -7 * this.cameraOffset;
+		// Scroll BG half speed (move it at half the speed of the camera so that it follows us halfway and appears to scroll slower)
+		this.bg.x = (1 - 0.5) * this.cameraOffset;
 
 		// Move walls with camera
 		this.leftWall.x = this.cameraOffset - this.leftWall.width;

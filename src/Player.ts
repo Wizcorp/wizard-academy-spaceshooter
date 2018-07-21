@@ -1,5 +1,6 @@
 import { GameScene } from "./GameScene";
 import { BasicEnemy } from "./base/BasicEnemy";
+import {arrayWithRange} from "./utils";
 
 enum AnimationState {
 	normal = 'normal',
@@ -28,10 +29,10 @@ export class Player extends Phaser.Sprite {
 
 		this.anchor.setTo(0.5, 0.5);
 
-		this.animations.add(AnimationState.normal, [0], 0, true);
-		this.animations.add(AnimationState.upwards, [1], 0, true);
-		this.animations.add(AnimationState.downwards, [2], 0, true);
-		this.animations.add(AnimationState.destroyed, [3, 4, 5, 6], 6, false);
+		this.animations.add(AnimationState.normal, [0, 1], 10, true);
+		this.animations.add(AnimationState.downwards, [2, 3], 10, true);
+		this.animations.add(AnimationState.upwards, [4, 5], 10, true);
+		this.animations.add(AnimationState.destroyed, arrayWithRange(8, 41), 60, false);
 
 		this.scene = scene;
 		this.lastShotAt = this.game.time.now;
@@ -94,7 +95,7 @@ export class Player extends Phaser.Sprite {
 	}
 
 	hasBeenHitByEnemy(enemy: BasicEnemy) {
-		if (this.currentState === AnimationState.destroyed) {
+		if (this.currentState === AnimationState.destroyed || enemy.destroyed) {
 			return;
 		}
 		this.currentState = AnimationState.destroyed;
