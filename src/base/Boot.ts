@@ -26,13 +26,11 @@ export class Boot extends Phaser.State {
 		}
 	}
 
-	preload() {
-		this.load.image('preloadBar', 'assets/loader.png');
-	}
+	preload() {}
 
 	create() {
 		//  By this point the preloader assets have loaded to the cache, we've set the game settings
 		//  So now let's start the real preloader going
-		this.game.state.start('GameScene');
+		this.game.state.start('TitleScene');
 	}
 }

@@ -24,4 +24,8 @@ export class TimesteppedScene extends Phaser.State {
 	fixedUpdate() {
 		console.log(`Please override fixedUpdate`);
 	}
+
+	protected get fixedDt(): number {
+		return BASIC_DT;
+	}
 }
