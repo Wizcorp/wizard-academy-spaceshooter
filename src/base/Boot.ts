@@ -12,7 +12,7 @@ export class Boot extends Phaser.State {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		this.scale.setMinMax(398, 224, 398*2, 224*2);
+		this.scale.setMinMax(this.game.width, this.game.height, this.game.width*2, this.game.height*2);
 
 		if (this.game.device.desktop) {
 			//  If you have any desktop specific settings, they can go in here
@@ -33,6 +33,6 @@ export class Boot extends Phaser.State {
 	create() {
 		//  By this point the preloader assets have loaded to the cache, we've set the game settings
 		//  So now let's start the real preloader going
-		this.game.state.start('Preloader');
+		this.game.state.start('GameScene');
 	}
 }

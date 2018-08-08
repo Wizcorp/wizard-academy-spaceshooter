@@ -1,6 +1,7 @@
 bin/*
 *.log
 node_modules
+desktop.ini
 
 # User-specific stuff
 .idea/**/workspace.xml

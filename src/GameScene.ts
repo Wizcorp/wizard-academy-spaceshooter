@@ -1,7 +1,7 @@
 import { TimesteppedScene } from "./base/TimesteppedScene";
 import { Player } from "./Player";
 import { Bullet } from "./Bullet";
-import { BasicEnemy, EnemyBehaviourDesc } from "./base/BasicEnemy";
+import { BasicEnemy, EnemyBehaviourDesc } from "./BasicEnemy";
 
 export class GameScene extends TimesteppedScene {
 	player: Player;

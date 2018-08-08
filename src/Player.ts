@@ -1,5 +1,5 @@
 import { GameScene } from "./GameScene";
-import { BasicEnemy } from "./base/BasicEnemy";
+import { BasicEnemy } from "./BasicEnemy";
 import {arrayWithRange} from "./utils";
 
 enum AnimationState {
