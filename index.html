@@ -4,22 +4,51 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>TypeScript HTML App Template</title>
+	<title>Wizard Academy Space Shooter</title>
 	<style type="text/css">
-	canvas {
-		image-rendering: optimizeSpeed;             /* Older versions of FF          */
-		image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
-		image-rendering: -webkit-optimize-contrast; /* Safari                        */
-		image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
-		image-rendering: pixelated;                 /* Awesome future-browsers       */
-		-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
-	}
+		#content {
+			position: relative;
+		}
+
+		#divForUi {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		canvas {
+			image-rendering: optimizeSpeed;             /* Older versions of FF          */
+			image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+			image-rendering: -webkit-optimize-contrast; /* Safari                        */
+			image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+			image-rendering: pixelated;                 /* Awesome future-browsers       */
+			-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+		}
+
+		/* In-game (see TitleScene) */
+		.titleText {
+			position: absolute;
+			font-family: Arial, fantasy;
+			font-size: 30px;
+			color: #fff;
+			text-align: center;
+			width: 100%;
+			top: 50px;
+		}
+
+		.startButton {
+			position: absolute;
+			left: 120px;
+			top: 140px;
+			width: 160px;
+			height: 30px;
+			font-size: 20px;
+		}
+
 	</style>
 </head>
 
 <body>
-
-	<h1>TypeScript HTML App Template</h1>
 
 	<div id="content"></div>
 

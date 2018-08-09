@@ -1,6 +1,7 @@
 import TimesteppedScene from "./base/TimesteppedScene";
 
 export default class TitleScene extends TimesteppedScene {
+	private contentDiv: HTMLDivElement;
 
 	/**
 	 * Load sprites and various assets here.
@@ -18,7 +19,25 @@ export default class TitleScene extends TimesteppedScene {
 		this.game.add.sprite(0, 0, 'bg');
 
 		// Start button
-		this.game.add.button(this.game.world.centerX - 100, this.game.world.centerY - 20, 'startButton', this.buttonOnClick, this, 2, 0, 1);
+		this.contentDiv = document.querySelector('#divForUi') as HTMLDivElement;
+
+		const title = document.createElement('div');
+		title.className = 'titleText';
+		title.textContent = 'Space shooter';
+		this.contentDiv.appendChild(title);
+
+		const button = document.createElement('button');
+		button.className = 'startButton';
+		button.appendChild(document.createTextNode("START"));
+		this.contentDiv.appendChild(button);
+
+		button.addEventListener('click', this.buttonOnClick.bind(this));
+	}
+
+	shutdown() {
+		while (this.contentDiv.hasChildNodes()) {
+			this.contentDiv.removeChild(this.contentDiv.lastChild);
+		}
 	}
 
 	/**
