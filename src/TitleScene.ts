@@ -1,6 +1,6 @@
-import { TimesteppedScene } from "./base/TimesteppedScene";
+import TimesteppedScene from "./base/TimesteppedScene";
 
-export class TitleScene extends TimesteppedScene {
+export default class TitleScene extends TimesteppedScene {
 
 	/**
 	 * Load sprites and various assets here.

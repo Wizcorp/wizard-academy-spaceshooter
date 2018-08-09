@@ -1,5 +1,5 @@
 
-export class Boot extends Phaser.State {
+export default class Boot extends Phaser.State {
 
 	init() {
 		//  Unless you specifically need to support multitouch I would recommend setting this to 1

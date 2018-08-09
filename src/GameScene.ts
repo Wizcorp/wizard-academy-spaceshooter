@@ -1,6 +1,6 @@
-import { TimesteppedScene } from "./base/TimesteppedScene";
+import TimesteppedScene from "./base/TimesteppedScene";
 
-export class GameScene extends TimesteppedScene {
+export default class GameScene extends TimesteppedScene {
 	private bg: Phaser.Sprite;
 
 	preload() {

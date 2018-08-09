@@ -1,7 +1,7 @@
 
 const BASIC_DT = 1.0 / 60.0;
 
-export class TimesteppedScene extends Phaser.State {
+export default class TimesteppedScene extends Phaser.State {
 	lastUpdateTime: number;
 
 	create(): void {
