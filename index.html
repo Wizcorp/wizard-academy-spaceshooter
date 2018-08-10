@@ -10,12 +10,6 @@
 			position: relative;
 		}
 
-		#divForUi {
-			position: absolute;
-			top: 0;
-			left: 0;
-		}
-
 		canvas {
 			image-rendering: optimizeSpeed;             /* Older versions of FF          */
 			image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
@@ -24,27 +18,6 @@
 			image-rendering: pixelated;                 /* Awesome future-browsers       */
 			-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 		}
-
-		/* In-game (see TitleScene) */
-		.titleText {
-			position: absolute;
-			font-family: Arial, fantasy;
-			font-size: 30px;
-			color: #fff;
-			text-align: center;
-			width: 100%;
-			top: 50px;
-		}
-
-		.startButton {
-			position: absolute;
-			left: 120px;
-			top: 140px;
-			width: 160px;
-			height: 30px;
-			font-size: 20px;
-		}
-
 	</style>
 </head>
 
@@ -52,9 +25,9 @@
 
 	<div id="content"></div>
 
-	<script src="node_modules/phaser-ce/build/phaser.min.js"></script>
 	<script src="node_modules/phaser-ce/build/custom/pixi.js"></script>
 	<script src="node_modules/phaser-ce/build/custom/p2.js"></script>
+	<script src="node_modules/phaser-ce/build/phaser.min.js"></script>
 
 	<script src="build/game.bundle.js"></script>
 </body>

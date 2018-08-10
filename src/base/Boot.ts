@@ -1,8 +1,5 @@
 
 export default class Boot extends Phaser.State {
-	private divForUi: HTMLDivElement;
-	private canvasElement: HTMLCanvasElement;
-	private contentDiv: HTMLDivElement;
 
 	init() {
 		//  Unless you specifically need to support multitouch I would recommend setting this to 1
@@ -20,15 +17,7 @@ export default class Boot extends Phaser.State {
 		this.scale.forceLandscape = !this.game.device.desktop;
 	}
 
-	preload() {}
-
 	create() {
-		this.contentDiv = document.querySelector('#content') as HTMLDivElement;
-		this.canvasElement = document.querySelector('#content canvas') as HTMLCanvasElement;
-		this.divForUi = document.createElement('div');
-		this.divForUi.id = 'divForUi';
-		this.contentDiv.appendChild(this.divForUi);
-
 		//  By this point the preloader assets have loaded to the cache, we've set the game settings
 		//  So now let's start the real preloader going
 		this.game.state.start('TitleScene');
@@ -37,18 +26,11 @@ export default class Boot extends Phaser.State {
 	shutdown() {}
 
 	onResize() {
+		const contentDiv = document.querySelector('#content') as HTMLDivElement;
 		// Update size to an integer factor (min. 1)
-		const width = this.contentDiv.offsetWidth;
-		const height = window.innerHeight - this.contentDiv.offsetTop;
+		const width = contentDiv.offsetWidth;
+		const height = window.innerHeight - contentDiv.offsetTop;
 		const scaleFactor = Math.max(1, Math.floor(Math.min(width / this.game.width, height / this.game.height)));
-
 		this.scale.setUserScale(scaleFactor, scaleFactor);
-
-		// Update UI div
-		this.divForUi.style.width = `${this.game.width}px`;
-		this.divForUi.style.height = `${this.game.height}px`;
-		this.divForUi.style.transform = `translate(-50%, -50%) scale(${scaleFactor}) translate(50%, 50%)`;
-		// this.divForUi.style.width = `${this.canvasElement.offsetWidth}px`;
-		// this.divForUi.style.height = `${this.canvasElement.offsetHeight}px`;
 	}
 }
