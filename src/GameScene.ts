@@ -12,6 +12,6 @@ export default class GameScene extends TimesteppedScene {
 		this.player.anchor.set(0.5, 0.5);
 	}
 
-	fixedUpdate() {
+	fixedUpdate(dt: number) {
 	}
 }

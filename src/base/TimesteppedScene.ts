@@ -1,31 +1,24 @@
 
 const BASIC_DT = 1.0 / 60.0;
+const MAX_DT = 1.0;
 
 export default class TimesteppedScene extends Phaser.State {
-	lastUpdateTime: number;
-
-	create(): void {
-		this.lastUpdateTime = 0; // means that it's not set yet
-	}
+	lastUpdateTime: number = 0;
 
 	update(): void {
 		let time = this.game.time.totalElapsedSeconds();
 
-		if (!this.lastUpdateTime) {
-			this.lastUpdateTime = time;
+		if (time - this.lastUpdateTime > MAX_DT) {
+			this.lastUpdateTime = time - BASIC_DT;
 		}
 
 		while (time - this.lastUpdateTime >= BASIC_DT) {
-			this.fixedUpdate();
+			this.fixedUpdate(BASIC_DT);
 			this.lastUpdateTime += BASIC_DT;
 		}
 	}
 
-	fixedUpdate() {
+	fixedUpdate(dt: number) {
 		console.log(`Please override fixedUpdate`);
-	}
-
-	protected get fixedDt(): number {
-		return BASIC_DT;
 	}
 }

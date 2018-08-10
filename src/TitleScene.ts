@@ -35,7 +35,11 @@ export default class TitleScene extends TimesteppedScene {
 		button.addEventListener('click', this.buttonOnClick.bind(this));
 	}
 
+	/**
+	 * Ran when the scene is left (this.game.state.start('otherState')).
+	 */
 	shutdown() {
+		// Remove all child nodes (title, button, etc.)
 		while (this.contentDiv.hasChildNodes()) {
 			this.contentDiv.removeChild(this.contentDiv.lastChild);
 		}
@@ -44,10 +48,15 @@ export default class TitleScene extends TimesteppedScene {
 	/**
 	 * Ran every frame (this.fixedDt).
 	 */
-	fixedUpdate() {
+	fixedUpdate(dt: number) {
 		// Move 30 pixels/second left
-		this.bg.tilePosition.x -= 30 * this.fixedDt;
-	}
+		this.bg.tilePosition.x -= 30 * dt;
+
+		// Skip to next scene with space or return
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER) || this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			this.buttonOnClick();
+		}
+}
 
 	/**
 	 * Callback for button.
