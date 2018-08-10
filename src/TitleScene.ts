@@ -2,6 +2,7 @@ import TimesteppedScene from "./base/TimesteppedScene";
 
 export default class TitleScene extends TimesteppedScene {
 	private contentDiv: HTMLDivElement;
+	private bg: Phaser.TileSprite;
 
 	/**
 	 * Load sprites and various assets here.
@@ -16,9 +17,9 @@ export default class TitleScene extends TimesteppedScene {
 	 */
 	create() {
 		// Background
-		this.game.add.sprite(0, 0, 'bg');
+		this.bg = this.game.add.tileSprite(0, 0, 398, 224, 'bg');
 
-		// Start button
+		// Title and start button
 		this.contentDiv = document.querySelector('#divForUi') as HTMLDivElement;
 
 		const title = document.createElement('div');
@@ -44,6 +45,8 @@ export default class TitleScene extends TimesteppedScene {
 	 * Ran every frame (this.fixedDt).
 	 */
 	fixedUpdate() {
+		// Move 30 pixels/second left
+		this.bg.tilePosition.x -= 30 * this.fixedDt;
 	}
 
 	/**

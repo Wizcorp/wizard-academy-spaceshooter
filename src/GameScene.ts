@@ -1,19 +1,17 @@
 import TimesteppedScene from "./base/TimesteppedScene";
 
 export default class GameScene extends TimesteppedScene {
-	private bg: Phaser.Sprite;
+	private player: Phaser.Sprite;
 
 	preload() {
-		this.game.load.image('bg', 'assets/bg.png');
 		this.game.load.image('player', 'assets/player.png');
 	}
 
 	create() {
-		this.bg = this.game.add.sprite(this.game.width, 0, 'bg');
+		this.player = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'player');
+		this.player.anchor.set(0.5, 0.5);
 	}
 
 	fixedUpdate() {
-		// Move 30 pixels/second left
-		this.bg.x -= 30 * this.fixedDt;
 	}
 }
