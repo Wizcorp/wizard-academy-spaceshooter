@@ -1,7 +1,8 @@
 
 export default class Boot extends Phaser.State {
+	startScene: string;
 
-	init() {
+	init(options: { startScene: string }) {
 		//  Unless you specifically need to support multitouch I would recommend setting this to 1
 		this.input.maxPointers = 1;
 
@@ -15,12 +16,14 @@ export default class Boot extends Phaser.State {
 		this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
 		this.scale.pageAlignHorizontally = false;
 		this.scale.forceLandscape = !this.game.device.desktop;
+
+		this.startScene = options.startScene;
 	}
 
 	create() {
 		//  By this point the preloader assets have loaded to the cache, we've set the game settings
 		//  So now let's start the real preloader going
-		this.game.state.start('TitleScene');
+		this.game.state.start(this.startScene);
 	}
 
 	shutdown() {}

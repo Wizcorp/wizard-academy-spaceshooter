@@ -4,12 +4,10 @@
  */
 import "phaser-ce"; // Just imports types
 import Boot from "./base/Boot";
-import TitleScene from "./TitleScene";
-import GameScene from "./GameScene";
+import MainScene from './MainScene';
 
 const game = new Phaser.Game(796, 448, Phaser.AUTO, 'content', null);
 game.state.add('Boot', Boot, false);
-game.state.add('TitleScene', TitleScene, false);
-game.state.add('GameScene', GameScene, false);
+game.state.add('MainScene', MainScene, false);
 
-game.state.start('Boot');
+game.state.start('Boot', true, false, { startScene: 'MainScene' });
