@@ -10,6 +10,7 @@ The template includes the phaser-ce library, the phaser typescript definitions, 
 The resulting output of building the project is a runnable "game" that can serve as a starting point for any Phaser game.
 
 ## Prerequisites
+* Node version 7 or more (tested with version 8 too).
 * Typescript (macOS): https://www.dyclassroom.com/howto-mac/how-to-install-typescript-on-mac-using-node-npm
     * On Windows, you only need to follow the third step. Supposing you already have a shell like [cmder](http://cmder.net/) with git for windows (downloaded via cmder) and an node distribution (for example [nodist](https://github.com/marcelklehr/nodist)).
 
